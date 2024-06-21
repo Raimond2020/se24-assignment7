@@ -244,4 +244,47 @@ class DoublyLinkedListTest {
         Assertions.assertNull(list.getEnd().getNext());
         Assertions.assertSame(list.getEnd().getPrev().getNext(), list.getEnd());
     }
+
+    @Test
+    void testInsertIntoEmptyList() {
+        // given: the list is empty
+        Assertions.assertTrue(list.isEmpty());
+        // when: inserting a new element
+        list.insert(0.5);
+        // then: the list has one element
+        Assertions.assertEquals(1, list.getLength());
+        Assertions.assertEquals(0.5, list.getStart().getValue());
+        Assertions.assertEquals(0.5, list.getEnd().getValue());
+    }
+
+    @Test
+    void testInsertNewMinimumUsingValue() {
+        // given: the list has four sorted elements
+        list.append(new double[]{0.2, 0.4, 0.5, 0.8});
+        // when: inserting a new value smaller than the minimum of the list
+        list.insert(0.1);
+        // then: the new value is the start of the list
+        Assertions.assertArrayEquals(new double[]{0.1, 0.2, 0.4, 0.5, 0.8}, list.asArray());
+    }
+
+    @Test
+    void testInsertNewMaximumUsingValue() {
+        // given: the list has four sorted elements
+        list.append(new double[]{0.2, 0.4, 0.5, 0.8});
+        // when: inserting a new value greater than the maximum of the list
+        list.insert(0.9);
+        // then: the new value is the end of the list
+        Assertions.assertArrayEquals(new double[]{0.2, 0.4, 0.5, 0.8, 0.9}, list.asArray());
+    }
+
+    @Test
+    void testInsertNeitherMinimumNorMaximumUsingValue() {
+        // given: the list has four sorted elements
+        list.append(new double[]{0.2, 0.4, 0.5, 0.8});
+        // when: inserting a new value between the minimum and the maximum of the list
+        list.insert(0.6);
+        // then: the new value is placed in the right position
+        Assertions.assertArrayEquals(new double[]{0.2, 0.4, 0.5, 0.6, 0.8}, list.asArray());
+    }
+
 }
